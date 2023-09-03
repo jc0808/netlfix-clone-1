@@ -3,6 +3,10 @@
     height: 448px;
     color: white;
     object-fit: contain;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
 }
 
 .banner__contents {
@@ -17,9 +21,19 @@
     padding-top: 1rem;
     max-width: 360px;
     height: 80px;
+    padding-bottom: 0.3rem;
 }
 
-.banner--fabeButtom {
+.banner__description {
+    width: 45rem;
+    line-height: 1.3;
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    max-width: 360px;
+    height: 80px;
+}
+
+.banner--fadeBottom {
     height: 7.4rem;
     background-image: linear-gradient(180deg,
             transparent,

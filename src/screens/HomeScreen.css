@@ -1,0 +1,16 @@
+.bottom {
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    bottom: 0;
+    padding: 20px;
+
+}
+
+.bottom>p {
+    color: #fff;
+}
+
+.bottom>img {
+    max-width: 300px;
+}
