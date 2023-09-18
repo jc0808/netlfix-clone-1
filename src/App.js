@@ -15,11 +15,8 @@ import { collection, getDocs } from 'firebase/firestore';
 function App() {
 
   const user = useSelector(selectUser);
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-
   const [subscription, setSubscription] = useState(null);
 
   useEffect(() => {

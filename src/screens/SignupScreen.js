@@ -8,7 +8,6 @@ const SignupScreen = () => {
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const ConfirmPasswordRef = useRef(null);
-
     const [screen, setScreen] = useState(0);
 
     const register = (e) => {
