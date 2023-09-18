@@ -88,30 +88,7 @@ const PlanScreen = () => {
 
     }, []);
 
-    // console.log(user)
-
     const loadCheckout = async (priceId) => {
-        // const docRef = await collection(db, "customers").doc(user.uid).collection("checkout_sessions")
-        //     .add({
-        //         price: priceId,
-        //         success_url: window.location.origin,
-        //         cancel_url: window.location.origin,
-
-        //     });
-
-        // docRef.onSnapshot(async (snap) => {
-        //     const { error, sessionId } = snap.data();
-
-        //     if (error) {
-        //         alert(`An error has occured: ${error.message}`);
-        //     }
-
-        //     if (sessionId) {
-        //         const stripe = await loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY);
-
-        //         stripe.redirectToCheckout({ sessionId });
-        //     }
-        // })
 
 
         const docRef = await addDoc(collection(db, `customers/${user.uid}/checkout_sessions`), {
@@ -150,7 +127,7 @@ const PlanScreen = () => {
                 const isCurrentPackage = product.product?.name.toLowerCase().includes(subscription?.role);
 
                 return (
-                    <div key={product.product.id} className={`${isCurrentPackage && "planScreen__plan--disabled"} planScreen__plan`}>
+                    <div key={product.productId} className={`${isCurrentPackage && "planScreen__plan--disabled"} planScreen__plan`}>
                         <div className="planScreen__info">
                             <h5>{product?.product?.name}</h5>
                             <h6>{product?.product?.description}</h6>

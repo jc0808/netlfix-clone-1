@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import HomeScreen from './screens/HomeScreen';
 
 import { Route, Routes, useNavigate } from "react-router-dom";
 import LoginScreen from './screens/LoginScreen';
-import { auth } from './firebaseConfig';
+import db, { auth } from './firebaseConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout, selectUser } from './features/userSlice';
 import ProfileScreen from './screens/ProfileScreen';
+import { collection, getDocs } from 'firebase/firestore';
 
 
 
@@ -18,6 +19,8 @@ function App() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+
+  const [subscription, setSubscription] = useState(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(userAuth => {
@@ -36,17 +39,43 @@ function App() {
   }, [dispatch, navigate])
 
 
+  useEffect(() => {
+
+    if (user?.uid) {
+      const getSubs = async () => {
+        const colRef = collection(db, `customers/${user.uid}/subscriptions`);
+
+        const docSnap = await getDocs(colRef);
+
+        docSnap.forEach(async sub => {
+          setSubscription({
+            role: sub.data().role,
+            current_period_end: sub.data().current_period_end.seconds,
+            current_period_start: sub.data().current_period_start.seconds,
+          });
+        });
+
+      };
+
+      getSubs();
+    }
+
+
+  }, [user?.uid]);
+
+
+
   return (
     <div className="App">
-      {/* <h1>Lets build Netflix</h1> */}
-
-      {/* <HomeScreen /> */}
 
       {!user ? <LoginScreen /> : (
-        <Routes>
-          <Route path='/profile' element={<ProfileScreen />} />
-          <Route exact path='/' element={<HomeScreen />} />
-        </Routes>
+        <>
+          {subscription ?
+            <Routes>
+              <Route path='/profile' element={<ProfileScreen />} />
+              <Route exact path='/' element={<HomeScreen />} />
+            </Routes> : <ProfileScreen />}
+        </>
       )}
     </div>
   );
